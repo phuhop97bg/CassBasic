@@ -21,17 +21,7 @@ func main() {
 	}
 	defer session.Close()
 	ctx := context.Background()
-	userid := 9
-	name := "hoang anh"
-	age := "22"
-	addr := "bac ninh"
+	session.Query(`CREATE INDEX IF NOT EXISTS age_user ON dev.users (  age  )`).WithContext(ctx).Exec()
 
-	query := session.Query(`INSERT INTO dev.users (userid, name, age, addr, last_update_timestamp)
-	VALUES (?, ? , ? ,? , toTimeStamp(now()));`, userid, name, age, addr)
-
-	if err = query.WithContext(ctx).Exec(); err != nil {
-		log.Fatalf("-------------------------------------------------------%v", err)
-	}
-
-	fmt.Println("INSERT DATA OK!")
+	fmt.Println("Create Index OK!")
 }
